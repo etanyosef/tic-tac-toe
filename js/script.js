@@ -13,18 +13,22 @@ function gameBoard() {
 
     const getBoard = () => board;
 
-    const placeToken = (cell, player) => {
-        const availableCells = board.filter( (row) => row[cell].getValue() === 0 );
+    const placeToken = (column, player) => {
+        const availableCells = board.filter( (row) => row[column].getValue() === 0 ).map(row => row[column]);
 
         if ( !(availableCells === 0) ) return;
 
-        board[cell].addToken(player);
+        board[column].addToken(player);
     }
+
+    placeToken(2, 'aw');
+    console.log(placeToken());
 
     const printBoard = () => {
         const boardWithCellValues = board.map( (row) => row.map( (cell)  => cell.getValue() ) );
         console.log(boardWithCellValues);
     }
+
 
     return {
         getBoard, placeToken, printBoard
