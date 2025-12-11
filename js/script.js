@@ -17,6 +17,11 @@ const gameBoard = (function () {
             cellButton.textContent = cell;
             boardContainer.append(cellButton);
         });
+        //
+        const cells = document.querySelectorAll('.cell');
+        cells.forEach( (cell) => {
+            cell.addEventListener('click', gameController.addToken);
+        });
     }
 
     return { render }
@@ -47,7 +52,12 @@ const gameController = (function () {
         gameBoard.render();
     });
 
-    return { start }
+    const addToken = (function (event) {
+        let index = event.target.dataset.index;
+        console.log(index);
+    });
+
+    return { start, addToken }
 })();
 
 function displayController() {
