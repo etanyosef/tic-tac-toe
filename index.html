@@ -9,9 +9,30 @@
 </head>
 <body>
     <div class="container">
+        <header>
+            <h1>Tic Tac Toe</h1>
+        </header>
         <main>
+            <div>
+                <div>
+                    <div>                        
+                        <label for="player1">Player 1</label>
+                        <input type="text" id="player1" name="player1" required>                        
+                    </div>
+                    <div>                        
+                        <label for="player2">Player 2</label>
+                        <input type="text" id="player2" name="player2" required>                        
+                    </div>
+                    <div>
+                        <button id="start-button">Start</button>
+                        <button id="restart-button">Restart</button>
+                    </div>
+                </div>
+            </div>
+
             <h2 class="turn"></h2>
-            <div class="board"></div>
+            <div class="board-container"></div>
+            
         </main>
     </div>
 </body>
