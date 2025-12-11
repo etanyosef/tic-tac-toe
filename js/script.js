@@ -7,8 +7,10 @@ const gameBoard = (function () {
     // create board array
     let board = ['', '', '', '', '', '', '', '', ''];
 
+    // create render function that create and display buttons in the board ui
     const render = () => {
         const boardContainer = document.querySelector('.board-container');
+        boardContainer.textContent = '';
         // loop through the board array and create button each
         board.forEach( (cell, index) => {
             const cellButton = document.createElement('button');
@@ -16,11 +18,6 @@ const gameBoard = (function () {
             cellButton.dataset.index = index;
             cellButton.textContent = cell;
             boardContainer.append(cellButton);
-        });
-        //
-        const cells = document.querySelectorAll('.cell');
-        cells.forEach( (cell) => {
-            cell.addEventListener('click', gameController.addToken);
         });
     }
 
@@ -34,26 +31,37 @@ const createPlayer = (function (name, token) {
 });
 
 const gameController = (function () {
-    let players = [];
-    let activePlayer;
     let gameOver;
 
-    // start game
+    // function that start the game
     const start = (function () {
         // create players inside array
-        players = [
-            createPlayer(document.getElementById('player1').value, 'X'),
-            createPlayer(document.getElementById('player2').value, 'O')
-        ];
+        const playerOne = createPlayer(document.getElementById('player1').value, 'X');
+        const playerTwo = createPlayer(document.getElementById('player2').value, 'O');
+        console.log(playerOne);
 
-        activePlayer = 0;
+        // get player turn
+        let activePlayer = players[0];
+        const switchPlayerTurn = function () {
+            activePlayer = activePlayer === players[0]? players[1] : players[0];
+        }
+        const getActivePlayer = () => activePlayer;
+
         gameOver = false;
-        // display buttons
+
+        // display buttons in the ui
         gameBoard.render();
+
+        //  add click listener on each button cell
+        const cells = document.querySelectorAll('.cell');
+        cells.forEach( (cell) => {
+            cell.addEventListener('click', addToken);
+        });
     });
 
-    const addToken = (function (event) {
-        let index = event.target.dataset.index;
+    const addToken = (function () {
+        let index = this.dataset.index;
+        // this.textContent = getActivePlayer[1];
         console.log(index);
     });
 
@@ -63,5 +71,3 @@ const gameController = (function () {
 function displayController() {
 
 }
-
-
