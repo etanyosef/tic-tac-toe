@@ -35,10 +35,15 @@ const gameController = (function () {
 
     // function that start the game
     const start = (function () {
+        let players = [];
         // create players inside array
         const playerOne = createPlayer(document.getElementById('player1').value, 'X');
         const playerTwo = createPlayer(document.getElementById('player2').value, 'O');
-        console.log(playerOne);
+
+        players.push(playerOne);
+        players.push(playerTwo);
+
+        console.log(`Player one: ${players[0].name} Player two: ${players[1].name} `);
 
         // get player turn
         let activePlayer = players[0];
@@ -52,20 +57,22 @@ const gameController = (function () {
         // display buttons in the ui
         gameBoard.render();
 
+        const addToken = (function () {
+            let index = this.dataset.index;
+            this.textContent = getActivePlayer().token;
+            console.log(getActivePlayer().name);
+            console.log(index);
+        });
+
         //  add click listener on each button cell
         const cells = document.querySelectorAll('.cell');
         cells.forEach( (cell) => {
             cell.addEventListener('click', addToken);
         });
+
     });
 
-    const addToken = (function () {
-        let index = this.dataset.index;
-        // this.textContent = getActivePlayer[1];
-        console.log(index);
-    });
-
-    return { start, addToken }
+    return { start }
 })();
 
 function displayController() {
