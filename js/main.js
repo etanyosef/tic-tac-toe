@@ -13,6 +13,17 @@ playersForm.addEventListener('submit', (event) => {
     initializeGame(data);
 });
 
+const winConditions = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+];
+
 const initializeVariables = (data) => {
     data.gameMode = +data.gameMode;
     data.board = [0, 1, 2, 3, 4, 5, 6, 7, 8];
@@ -61,6 +72,36 @@ const playMove = (cell, data) => {
     data.round++;
 
     // check win conditions
+    if (endConditions(data)) {
+        // show end game dialog
+    }
 
     console.log(cell, data);
-}
+};
+
+const endConditions = (data) => {
+    // 3 potential options
+    // winner, tie, game not over
+    if (checkWinner(data)) {
+        // display winner to UI
+        return true;
+    } else if (data.round === 9) {
+        // display tie to UI
+        return true;
+    }
+    return false;
+};
+
+const checkWinner = (data) => {
+    let result = false;
+    winConditions.forEach(condition => {
+        if (
+            data.board[condition[0]] === data.board[condition[1]] &&
+            data.board[condition[1]] === data.board[condition[2]]
+        ) {
+            data.gameOver = true;
+            result = true;
+        }
+    });
+    return result;
+};
