@@ -22,6 +22,14 @@ const initializeVariables = (data) => {
     data.gameOver = false;
 }
 
+const addEventListenerToGameBoard = (data) => {
+    document.querySelectorAll('.cell').forEach(cell => {
+        cell.addEventListener('click', (event) => {
+            playMove(event.target, data);
+        })
+    })
+}
+
 const initializeGame = (data) => {
     // initialize game variables
     initializeVariables(data);
