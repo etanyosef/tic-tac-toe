@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic Tac Toe</title>
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/script.js" defer></script>
+    <!-- <script src="js/script.js" defer></script> -->
+     <script src="js/main.js" defer></script>
 </head>
 <body>
     <div class="container">
@@ -13,22 +14,24 @@
             <h1>Tic Tac Toe</h1>
         </header>
         <main>
-            <div>
+            <dialog open="" id="playersFormDialog">
                 <div>
-                    <div>                        
-                        <label for="player1">Player 1</label>
-                        <input type="text" id="player1" name="player1" required>                        
-                    </div>
-                    <div>                        
-                        <label for="player2">Player 2</label>
-                        <input type="text" id="player2" name="player2" required>                        
-                    </div>
-                    <div>
-                        <button id="start-button">Start</button>
-                        <button id="restart-button">Restart</button>
-                    </div>
+                    <form id="players-form">
+                        <div>                        
+                            <label for="player1">Player 1</label>
+                            <input type="text" id="player1" name="player1" required>                        
+                        </div>
+                        <div>                        
+                            <label for="player2">Player 2</label>
+                            <input type="text" id="player2" name="player2" required>                        
+                        </div>
+                        <div>
+                            <button id="start-button" type="submit">Start</button>
+                        </div>
+                    </form>
                 </div>
-            </div>
+            </dialog>
+            
 
             <h2 class="turn"></h2>
             <div class="board-container"></div>
