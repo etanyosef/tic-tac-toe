@@ -1,4 +1,4 @@
-const dialog = document.getElementById('playersFormDialog');
+const playersFormDialog = document.getElementById('players-form-dialog');
 const playersForm = document.getElementById('players-form');
 playersForm.addEventListener('submit', (event) => {
     // prevent page refresh
@@ -8,7 +8,7 @@ playersForm.addEventListener('submit', (event) => {
     const playerData = new FormData(playersForm);
     const data = Object.fromEntries(playerData);
     // close dialog form
-    dialog.close();
+    playersFormDialog.close();
 
     initializeGame(data);
 });
@@ -46,6 +46,8 @@ const initializeGame = (data) => {
     // initialize game variables
     initializeVariables(data);
 
+    adjustDom('turn', `${data.player1}'s turn`);
+
     console.log(data);
     // add eventlisteners to the gameboard
     addEventListenerToGameBoard(data);
@@ -73,10 +75,11 @@ const playMove = (cell, data) => {
 
     // check win conditions
     if (endConditions(data)) {
-        // show end game dialog
+        return;
     }
 
-    console.log(cell, data);
+    // switch player, dom, and change data.currentPlayer
+    switchPlayer(data);
 };
 
 const endConditions = (data) => {
@@ -84,9 +87,13 @@ const endConditions = (data) => {
     // winner, tie, game not over
     if (checkWinner(data)) {
         // display winner to UI
+        const winnerName = data.currentPlayer === 'X' ? data.player1 : data.player2;
+        adjustDom('turn', winnerName + " has won the game.");
         return true;
     } else if (data.round === 9) {
         // display tie to UI
+        adjustDom('turn', "It's a tie!");
+        data.gameOver = true;
         return true;
     }
     return false;
@@ -105,3 +112,15 @@ const checkWinner = (data) => {
     });
     return result;
 };
+
+const adjustDom = (className, textContent) => {
+    const elem = document.querySelector(`.${className}`);
+    elem.textContent = textContent;
+}
+
+const switchPlayer = (data) => {
+    data.currentPlayer = data.currentPlayer === 'X' ? 'O' : 'X';
+    // adjust DOM
+    const displayTurnText = data.currentPlayer === 'X' ? data.player1 : data.player2;
+    adjustDom('turn', displayTurnText + "'s turn");
+}
