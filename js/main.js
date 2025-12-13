@@ -73,13 +73,21 @@ const playMove = (cell, data) => {
     // increase the round
     data.round++;
 
-    // check win conditions
+    // check end conditions
     if (endConditions(data)) {
         return;
     }
 
     // switch player, dom, and change data.currentPlayer
-    switchPlayer(data);
+    if (data.gameMode === 0) {
+        switchPlayer(data);
+    } else if (data.gameMode === 1) {
+        // easy ai turn
+        easyAiMove(data);
+        data.currentPlayer = 'X';
+        // change back to player1
+    }
+    
 };
 
 const endConditions = (data) => {
@@ -124,3 +132,24 @@ const switchPlayer = (data) => {
     const displayTurnText = data.currentPlayer === 'X' ? data.player1 : data.player2;
     adjustDom('turn', displayTurnText + "'s turn");
 }
+
+const easyAiMove = (data) => {
+    switchPlayer(data);
+    const availableCells = data.board.filter(cell => cell !== 'X' && cell !== 'O');
+    const move = availableCells[Math.floor(Math.random() * availableCells.length)];
+
+    data.board[move] = data.playerTwoToken;
+    const cell = document.querySelector(`[data-index='${move}']`);
+    cell.textContent = data.playerTwoToken;
+    cell.classList.add('player2');
+
+    if (endConditions(data)) {
+        console.log(data);
+        console.log('end game');
+    }
+
+    switchPlayer(data);
+}
+
+
+// 1:19:20
