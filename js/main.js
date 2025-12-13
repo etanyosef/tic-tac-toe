@@ -7,6 +7,27 @@ playersForm.addEventListener('submit', (event) => {
     // initialize player data
     const playerData = new FormData(playersForm);
     const data = Object.fromEntries(playerData);
+    // close dialog form
     dialog.close();
+
+    initializeGame(data);
+});
+
+const initializeVariables = (data) => {
+    data.board = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    data.playerOneToken = 'X';
+    data.playerTwoToken = 'O';
+    data.round = 0;
+    data.currentPlayer = 'X';
+    data.gameOver = false;
+}
+
+const initializeGame = (data) => {
+    // initialize game variables
+    initializeVariables(data);
+
     console.log(data);
-})
+    // add eventlisteners to the gameboard
+    
+
+};
