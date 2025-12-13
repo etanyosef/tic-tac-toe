@@ -14,7 +14,7 @@
             <h1>Tic Tac Toe</h1>
         </header>
         <main>
-            <dialog open="" id="playersFormDialog">
+            <dialog open="" id="players-form-dialog">
                 <div>
                     <form id="players-form">
                         <div>                        
@@ -30,15 +30,15 @@
                                 <legend>Game Mode</legend>
                                 <div>
                                     <label for="human-vs-human">Human vs Human</label>
-                                    <input type="checkbox" name="game-mode" id="human-vs-human" value="0" checked>
+                                    <input type="checkbox" name="gameMode" id="human-vs-human" value="0" checked>
                                 </div>
                                 <div>
                                     <label for="human-vs-human">Human vs AI(Easy)</label>
-                                    <input type="checkbox" name="game-mode" id="human-vs-human" value="1">
+                                    <input type="checkbox" name="gameMode" id="human-vs-human" value="1">
                                 </div>
                                 <div>
                                     <label for="human-vs-human">Human vs AI(Hard)</label>
-                                    <input type="checkbox" name="game-mode" id="human-vs-human" value="2">
+                                    <input type="checkbox" name="gameMode" id="human-vs-human" value="2">
                                 </div>                                
                             </fieldset>
                         </div>
@@ -50,17 +50,17 @@
             </dialog>
             
 
-            <h2 class="turn"></h2>
+            <h2 class="turn">Player one's turn</h2>
             <div class="board-container">
-                <button class="cell" id="1"></button>
-                <button class="cell" id="2"></button>
-                <button class="cell" id="3"></button>
-                <button class="cell" id="4"></button>
-                <button class="cell" id="5"></button>
-                <button class="cell" id="6"></button>
-                <button class="cell" id="7"></button>
-                <button class="cell" id="8"></button>
-                <button class="cell" id="9"></button>
+                <button class="cell" data-index="0"></button>
+                <button class="cell" data-index="1"></button>
+                <button class="cell" data-index="2"></button>
+                <button class="cell" data-index="3"></button>
+                <button class="cell" data-index="4"></button>
+                <button class="cell" data-index="5"></button>
+                <button class="cell" data-index="6"></button>
+                <button class="cell" data-index="7"></button>
+                <button class="cell" data-index="8"></button>
             </div>
             
         </main>
