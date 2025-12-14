@@ -3,7 +3,7 @@ startButton.addEventListener('click', () => {
     gameController.start();
 });
 
-const gameBoard = (function () {
+function gameBoard() {
     // create board array
     let board = ['', '', '', '', '', '', '', '', ''];
 
@@ -19,11 +19,11 @@ const gameBoard = (function () {
             cellButton.textContent = cell;
             boardContainer.append(cellButton);
         });
-    }
+    };
 
-    return { render }
+    return { render, board }
 
-})();
+};
 
 // createPlayer function factory
 const createPlayer = (function (name, token) {
@@ -32,10 +32,12 @@ const createPlayer = (function (name, token) {
 
 const gameController = (function () {
     let gameOver;
+    let players = [];
+
+    const board = gameBoard();
 
     // function that start the game
     const start = (function () {
-        let players = [];
         // create players inside array
         const playerOne = createPlayer(document.getElementById('player1').value, 'X');
         const playerTwo = createPlayer(document.getElementById('player2').value, 'O');
@@ -44,6 +46,9 @@ const gameController = (function () {
         players.push(playerTwo);
 
         console.log(`Player one: ${players[0].name} Player two: ${players[1].name} `);
+
+        // display buttons in the ui
+        board.render();
 
         // get player turn
         let activePlayer = players[0];
@@ -54,14 +59,16 @@ const gameController = (function () {
 
         gameOver = false;
 
-        // display buttons in the ui
-        gameBoard.render();
-
         const addToken = (function () {
             let index = this.dataset.index;
+            index = index.toString();
             this.textContent = getActivePlayer().token;
-            console.log(getActivePlayer().name);
-            console.log(index);
+            
+            board.board[index] = getActivePlayer().token;
+            
+            console.log(board.board);
+
+            switchPlayerTurn();
         });
 
         //  add click listener on each button cell
