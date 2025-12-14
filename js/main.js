@@ -25,6 +25,7 @@ const winConditions = [
 ];
 
 const initializeVariables = (data) => {
+    // +variable converts it to int
     data.gameMode = +data.gameMode;
     data.board = [0, 1, 2, 3, 4, 5, 6, 7, 8];
     data.playerOneToken = 'X';
@@ -45,7 +46,7 @@ const addEventListenerToGameBoard = (data) => {
 const initializeGame = (data) => {
     // initialize game variables
     initializeVariables(data);
-
+    // show whos turn in UI
     adjustDom('turn', `${data.player1}'s turn`);
 
     console.log(data);
@@ -83,10 +84,15 @@ const playMove = (cell, data) => {
         switchPlayer(data);
     } else if (data.gameMode === 1) {
         // easy ai turn
-        easyAiMove(data);
+        setTimeout( () => {
+            easyAiMove(data);
+        }, 500)
+        
         data.currentPlayer = 'X';
         // change back to player1
     }
+
+    console.log(data.round);
     
 };
 
@@ -124,32 +130,33 @@ const checkWinner = (data) => {
 const adjustDom = (className, textContent) => {
     const elem = document.querySelector(`.${className}`);
     elem.textContent = textContent;
-}
+};
 
 const switchPlayer = (data) => {
     data.currentPlayer = data.currentPlayer === 'X' ? 'O' : 'X';
     // adjust DOM
     const displayTurnText = data.currentPlayer === 'X' ? data.player1 : data.player2;
     adjustDom('turn', displayTurnText + "'s turn");
-}
+};
 
 const easyAiMove = (data) => {
     switchPlayer(data);
+
     const availableCells = data.board.filter(cell => cell !== 'X' && cell !== 'O');
     const move = availableCells[Math.floor(Math.random() * availableCells.length)];
-
     data.board[move] = data.playerTwoToken;
     const cell = document.querySelector(`[data-index='${move}']`);
     cell.textContent = data.playerTwoToken;
     cell.classList.add('player2');
 
+    data.round++;
+
     if (endConditions(data)) {
-        console.log(data);
-        console.log('end game');
+        return;
     }
 
-    switchPlayer(data);
-}
+    switchPlayer(data); 
+};
 
 
 // 1:19:20
