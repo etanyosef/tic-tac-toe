@@ -13,6 +13,13 @@ playersForm.addEventListener('submit', (event) => {
     initializeGame(data);
 });
 
+const newGameButton = document.getElementById('new-game-button');
+const resetGameButton = document.getElementById('reset-game-button');
+
+newGameButton.addEventListener('click', () => {
+    location.reload();
+});
+
 const winConditions = [
     [0, 1, 2],
     [3, 4, 5],
@@ -33,15 +40,28 @@ const initializeVariables = (data) => {
     data.round = 0;
     data.currentPlayer = 'X';
     data.gameOver = false;
-}
+};
+
+const resetBoardDom = () => {
+    document.querySelectorAll('.cell').forEach((cell) => {
+        cell.className = 'cell';
+        cell.textContent = '';
+    });
+};
 
 const addEventListenerToGameBoard = (data) => {
     document.querySelectorAll('.cell').forEach(cell => {
         cell.addEventListener('click', (event) => {
             playMove(event.target, data);
-        })
-    })
-}
+        });
+    });
+
+    resetGameButton.addEventListener('click', () => {
+        initializeVariables(data);
+        resetBoardDom();
+        adjustDom('turn', `${data.player1}'s turn`);
+    });
+};
 
 const initializeGame = (data) => {
     // initialize game variables
@@ -83,13 +103,15 @@ const playMove = (cell, data) => {
     if (data.gameMode === 0) {
         switchPlayer(data);
     } else if (data.gameMode === 1) {
-        // easy ai turn
-        setTimeout( () => {
-            easyAiMove(data);
-        }, 500)
+        // easy ai turn, add 500ms delay
         
-        data.currentPlayer = 'X';
+        easyAiMove(data);
+        
+        // data.currentPlayer = 'X';
         // change back to player1
+    } else if (data.gameMode === 2) {
+        hardAiMove(data);
+        data.currentPlayer = 'X';
     }
 
     console.log(data.round);
@@ -142,14 +164,17 @@ const switchPlayer = (data) => {
 const easyAiMove = (data) => {
     switchPlayer(data);
 
+    data.round++;
+
     const availableCells = data.board.filter(cell => cell !== 'X' && cell !== 'O');
     const move = availableCells[Math.floor(Math.random() * availableCells.length)];
     data.board[move] = data.playerTwoToken;
-    const cell = document.querySelector(`[data-index='${move}']`);
-    cell.textContent = data.playerTwoToken;
-    cell.classList.add('player2');
 
-    data.round++;
+    setTimeout( () => {
+        const cell = document.querySelector(`[data-index='${move}']`);
+        cell.textContent = data.playerTwoToken;
+        cell.classList.add('player2');        
+    }, 300);
 
     if (endConditions(data)) {
         return;
@@ -158,5 +183,6 @@ const easyAiMove = (data) => {
     switchPlayer(data); 
 };
 
+const hardAiMove = (data) => {
 
-// 1:19:20
+}
