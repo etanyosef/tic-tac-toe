@@ -103,28 +103,21 @@ const playMove = (cell, data) => {
     if (data.gameMode === 0) {
         switchPlayer(data);
     } else if (data.gameMode === 1) {
-        // easy ai turn, add 500ms delay
-        
         easyAiMove(data);
-        
-        // data.currentPlayer = 'X';
-        // change back to player1
     } else if (data.gameMode === 2) {
         hardAiMove(data);
-        data.currentPlayer = 'X';
     }
-
-    console.log(data.round);
     
 };
 
 const endConditions = (data) => {
     // 3 potential options
     // winner, tie, game not over
-    if (checkWinner(data)) {
+    if (checkWinner(data, data.currentPlayer)) {
         // display winner to UI
         const winnerName = data.currentPlayer === 'X' ? data.player1 : data.player2;
         adjustDom('turn', winnerName + " has won the game.");
+        data.gameOver = true;
         return true;
     } else if (data.round === 9) {
         // display tie to UI
@@ -135,14 +128,15 @@ const endConditions = (data) => {
     return false;
 };
 
-const checkWinner = (data) => {
+const checkWinner = (data, player) => {
     let result = false;
     winConditions.forEach(condition => {
         if (
-            data.board[condition[0]] === data.board[condition[1]] &&
-            data.board[condition[1]] === data.board[condition[2]]
+            data.board[condition[0]] === player &&
+            data.board[condition[1]] === player &&
+            data.board[condition[2]] === player
         ) {
-            data.gameOver = true;
+            // data.gameOver = true;
             result = true;
         }
     });
@@ -184,5 +178,76 @@ const easyAiMove = (data) => {
 };
 
 const hardAiMove = (data) => {
+    switchPlayer(data);
+    data.round++;
+    // get possible move from minimax algorithm
+    const move = minimax(data, 'O').index;
+    data.board[move] = data.playerTwoToken;
+    setTimeout( () => {
+        const cell = document.querySelector(`[data-index='${move}']`);
+        cell.textContent = data.playerTwoToken;
+        cell.classList.add('player2');        
+    }, 300);
+    
+    if (endConditions(data)) {
+        return;
+    }
 
+    switchPlayer(data);
+}
+
+const minimax = (data, player) => {
+    const availableCells = data.board.filter(cell => cell !== 'X' && cell !== 'O');
+    // check if winner, if player1 wins set score to -100
+    // if tie, set score to 0, if win, set score to 100
+    if (checkWinner(data, data.playerOneToken)) {
+        return {
+            score: -100,
+        }
+    } else if (checkWinner(data, data.playerTwoToken)) {
+        return {
+            score: 100,
+        }
+    } else if (availableCells.length === 0) {
+        return {
+            score: 0,
+        }
+    }
+    
+    const potentialMoves = [];
+    // loop over available cells to get list of all potential moves and check if wins
+    for (let i = 0; i < availableCells.length; i++) {
+        let move = {};
+        move.index = data.board[availableCells[i]];
+        data.board[availableCells[i]] = player;
+        if (player === data.playerTwoToken) {
+            move.score = minimax(data, data.playerOneToken).score;
+        } else {
+            move.score = minimax(data, data.playerTwoToken).score;
+        }
+        // reset the move on the board
+        data.board[availableCells[i]] = move.index;
+        // push the potential move to the array
+        potentialMoves.push(move);
+    }
+
+    let bestMove = 0;
+    if (player === data.playerTwoToken) {
+        let bestScore = -10000;
+        for (let i = 0; i < potentialMoves.length; i++) {
+            if (potentialMoves[i].score > bestScore) {
+                bestScore = potentialMoves[i].score;
+                bestMove = i;
+            }
+        }
+    } else if (player === data.playerOneToken) {
+        let bestScore = 10000;
+        for (let i = 0; i < potentialMoves.length; i++) {
+            if (potentialMoves[i].score < bestScore) {
+                bestScore = potentialMoves[i].score;
+                bestMove = i;
+            }
+        }
+    }
+    return potentialMoves[bestMove];
 }
