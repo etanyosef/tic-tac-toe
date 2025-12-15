@@ -1,4 +1,6 @@
 const playersFormDialog = document.getElementById('players-form-dialog');
+playersFormDialog.showModal();
+
 const playersForm = document.getElementById('players-form');
 playersForm.addEventListener('submit', (event) => {
     // prevent page refresh
