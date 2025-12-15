@@ -24,6 +24,19 @@ body {
     gap: 100px;
     margin-bottom: 30px;
 }
+.menu-buttons button {
+    font-family: inherit;
+    font-size: 1.5rem;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    font-weight: bold;
+}
+.menu-buttons button:hover {
+    color: red;
+    text-shadow: 1px 1px 10px rgba(244, 116, 116, 0.517);
+    transition: ease-in-out .1s;
+}
 
 .board-container {
     display: grid;
@@ -56,3 +69,4 @@ body {
 .board-container .cell.player2 {
     color: blue;
 }
+
