@@ -2,19 +2,57 @@
     box-sizing: border-box;
 }
 
+:root {
+    font-family: 'Segoe Script', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.5;
+    font-size: 16px;
+}
+
+body {
+    background-color: mintcream;
+}
+
+.title,
+.turn {
+    text-align: center;
+    font-size: 3rem;
+}
+
+.menu-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    margin-bottom: 30px;
+}
+
 .board-container {
     display: grid;
     width: 500px;
+    margin: 0 auto;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    gap: 10px;
+    gap: 5px;
     justify-content: center;
-    background-color: aquamarine;
-    padding: 10px;
-    border-radius: 10px;
+    background-color: gray;
 }
 
 .board-container .cell {
+    font-family: inherit;
     aspect-ratio: 1 / 1;
     cursor: pointer;
+    border: none;
+    background-color: mintcream;
+    font-size: 5rem;
+    transition: ease-in-out .2s;
+}
+
+.board-container .cell:hover {
+    background-color: rgb(225, 239, 232);
+}
+
+.board-container .cell.player1 {
+    color: green;
+}
+.board-container .cell.player2 {
+    color: blue;
 }
