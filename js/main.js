@@ -138,8 +138,15 @@ const checkWinner = (data, player) => {
             data.board[condition[1]] === player &&
             data.board[condition[2]] === player
         ) {
-            // data.gameOver = true;
-            result = true;
+            // add class to the winning cells
+            const winningCell1 = document.querySelector(`[data-index='${condition[0]}']`);
+            const winningCell2 = document.querySelector(`[data-index='${condition[1]}']`);
+            const winningCell3 = document.querySelector(`[data-index='${condition[2]}']`);
+            winningCell1.classList.add('winning-cell');
+            winningCell2.classList.add('winning-cell');
+            winningCell3.classList.add('winning-cell');
+
+            result = true;            
         }
     });
     return result;
