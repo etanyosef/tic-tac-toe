@@ -93,12 +93,15 @@ body {
     border-radius: 20px;
     font-family: Roboto, 'Times New Roman', Times, serif;
     box-shadow: 1px 1px 20px gray;
+    color: rgb(100, 100, 100);
 }
 .players-form-dialog input[type="text"] {
     width: 100%;
-    padding: 3px 6px;
+    padding: 6px 6px;
     font-size: 1.3rem;
     margin-bottom: 15px;
+    border: 1px solid gray;
+    border-radius: 5px;
 }
 .players-form-dialog .game-mode-fieldset {
     display: flex;
@@ -108,7 +111,7 @@ body {
     border: none;
 }
 .players-form-dialog .game-mode-fieldset legend {
-    padding: 8px 20px;
+    padding: 8px 20px 0;
     margin-left: -35px;
 }
 .players-form-dialog input[type="radio"] {
@@ -118,6 +121,7 @@ body {
 .players-form-dialog label:has(+input[type="radio"]:hover),
 .players-form-dialog label:has(+input[type="radio"]:checked)  {
     color: green;
+    cursor: pointer;
 }
 .players-form-dialog .game-mode-fieldset div {
     display: flex;
@@ -131,8 +135,15 @@ body {
     display: block;
     cursor: pointer;
     padding: 10px 40px;
-    background-color: crimson;
+    background-color: rgb(0, 128, 255);
     color: white;
     border: none;
     border-radius: 5px;
+    transition: ease-in-out .2s;
+}
+.players-form-dialog button:hover {
+    transform: translateY(-2px);
+}
+.players-form-dialog button:active {
+    transform: translateY(-5px);
 }
