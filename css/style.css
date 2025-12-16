@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    vertical-align: middle;
 }
 
 :root {
@@ -69,4 +70,69 @@ body {
 .board-container .cell.player2 {
     color: blue;
 }
-
+.board-container .cell.player1.winning-cell {
+    background-color: green;
+    color: white;
+}
+.board-container .cell.player2.winning-cell {
+    background-color: blue;
+    color: white;
+}
+.players-form-dialog::backdrop {
+    /* background-color: darkorange; */
+  background-image: linear-gradient(
+    130deg,#ff781882,
+    #af002c72 41.07%,
+    #3190977b 76.05%
+  );
+}
+.players-form-dialog {
+    font-size: 1.2rem;
+    padding: 50px;
+    border: none;
+    border-radius: 20px;
+    font-family: Roboto, 'Times New Roman', Times, serif;
+    box-shadow: 1px 1px 20px gray;
+}
+.players-form-dialog input[type="text"] {
+    width: 100%;
+    padding: 3px 6px;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+}
+.players-form-dialog .game-mode-fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+    border: none;
+}
+.players-form-dialog .game-mode-fieldset legend {
+    padding: 8px 20px;
+    margin-left: -35px;
+}
+.players-form-dialog input[type="radio"] {
+    width: 20px;
+    height: 20px;
+}
+.players-form-dialog label:has(+input[type="radio"]:hover),
+.players-form-dialog label:has(+input[type="radio"]:checked)  {
+    color: green;
+}
+.players-form-dialog .game-mode-fieldset div {
+    display: flex;
+    gap: 20px;
+    align-content: center;
+}
+.players-form-dialog button {
+    font-family: inherit;
+    font-size: 1.4rem;
+    margin: 20px auto 0;
+    display: block;
+    cursor: pointer;
+    padding: 10px 40px;
+    background-color: crimson;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
